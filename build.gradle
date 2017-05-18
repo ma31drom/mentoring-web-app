@@ -1,0 +1,68 @@
+buildscript {    
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-cargo-plugin:2.2.3'
+    }
+}
+
+plugins {
+	id "org.sonarqube" version "2.3"
+	id "com.bmuschko.cargo" version "2.2.3"
+}
+
+subprojects {
+	apply plugin: 'java'
+    
+	repositories {
+		jcenter()
+		mavenCentral()
+	}
+	
+	dependencies {
+		compile 'ch.qos.logback:logback-classic:1.1.9'
+	
+		compile 'org.postgresql:postgresql:42.1.0'
+
+		compile 'org.springframework.security:spring-security-core:4.2.2.RELEASE'
+		compile 'org.springframework.security:spring-security-web:4.2.2.RELEASE'
+		compile 'org.springframework.security:spring-security-config:4.2.2.RELEASE'
+
+		compile 'javax.validation:validation-api:1.1.0.Final'
+		compile 'org.hibernate:hibernate-validator:5.4.1.Final'
+	
+		testCompile 'org.testng:testng:6.10'
+   		testCompile 'org.mockito:mockito-all:1.10.19'
+		testCompile 'org.springframework:spring-test:4.2.2.RELEASE'
+	}
+	
+test.useTestNG()
+}
+
+repositories {
+	jcenter()
+	mavenCentral()
+}
+
+cargo {
+	containerId = 'tomcat8x'
+	port = 8181
+    deployable {
+        file = file('/app/build/libs/app-1.0.war')
+        context = 'app'
+    }
+    remote {
+	    hostname = 'localhost'
+    	username = 'admin'
+        password = 'password'
+    }
+	
+}
+
+dependencies {
+    def CARGO = '1.6.3'
+    cargo "org.codehaus.cargo:cargo-core-uberjar:$CARGO",
+          "org.codehaus.cargo:cargo-ant:$CARGO"
+}
+

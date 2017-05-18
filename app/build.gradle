@@ -1,0 +1,32 @@
+apply plugin: 'eclipse'
+apply plugin: 'war'
+
+compileJava.options.encoding = 'UTF-8'
+
+war {
+    baseName = 'app'
+    version =  '1.0'
+}
+
+dependencies {
+	compile project(':service')
+	compile project(':dao')
+    compile 'ch.qos.logback:logback-classic:1.1.9'
+	
+	compile 'org.springframework:spring-webmvc:4.2.2.RELEASE'
+	compile 'org.springframework:spring-web:4.2.2.RELEASE'
+	compile 'org.springframework.security:spring-security-taglibs:4.2.2.RELEASE'
+	
+	compile 'javax.servlet:jstl:1.2' 
+	compile 'javax.servlet:servlet-api:2.5'
+	compile 'org.apache.tiles:tiles-core:3.0.7'
+	compile 'org.apache.tiles:tiles-jsp:3.0.7'
+
+}
+
+        
+
+       
+        
+
+    

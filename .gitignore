@@ -1,0 +1,16 @@
+.gradle/*
+.project
+.settings/*
+service/bin/*
+dao/bin/*
+app/bin/*
+service/build/*
+dao/build/*
+app/build/*
+service/test-output/*
+dao/test-output/*
+app/test-output/*
+service/.settings/*
+dao/.settings/*
+app/.settings/*
+.classpath
