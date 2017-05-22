@@ -3,29 +3,27 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
-<html>
-
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>User Registration Form</title>
-<link href="<c:url value='/static/css/bootstrap.css' />"
-	rel="stylesheet"></link>
-<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
-</head>
-
-<body>
-	<div class="generic-container">
-		<%@include file="authheader.jsp"%>
-
-		<div class="well lead">User Registration Form</div>
+<div id="page-wrapper">
+	<div id="page-inner">
+		<div class="well lead">
+			<c:choose>
+				<c:when test="${edit}">
+					<spring:message code="user.edit.user" />
+				</c:when>
+				<c:otherwise>
+					<spring:message code="user.register.user" />
+				</c:otherwise>
+			</c:choose>
+		</div>
 		<form:form method="POST" modelAttribute="user" class="form-horizontal">
 			<form:input type="hidden" path="id" id="id" />
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="firstName">First
-						Name</label>
+					<label class="col-md-3 control-lable" for="firstName"><spring:message
+							code="user.first.name" /></label>
 					<div class="col-md-7">
 						<form:input type="text" path="firstName" id="firstName"
 							class="form-control input-sm" />
@@ -38,8 +36,8 @@
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="lastName">Last
-						Name</label>
+					<label class="col-md-3 control-lable" for="lastName"><spring:message
+							code="user.last.name" /></label>
 					<div class="col-md-7">
 						<form:input type="text" path="lastName" id="lastName"
 							class="form-control input-sm" />
@@ -73,7 +71,8 @@
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="password">Password</label>
+					<label class="col-md-3 control-lable" for="password"><spring:message
+							code="user.password" /></label>
 					<div class="col-md-7">
 						<form:input type="password" path="password" id="password"
 							class="form-control input-sm" />
@@ -86,7 +85,8 @@
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="email">Email</label>
+					<label class="col-md-3 control-lable" for="email"><spring:message
+							code="user.email" /></label>
 					<div class="col-md-7">
 						<form:input type="text" path="email" id="email"
 							class="form-control input-sm" />
@@ -99,7 +99,8 @@
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="userProfiles">Roles</label>
+					<label class="col-md-3 control-lable" for="userProfiles"><spring:message
+							code="user.roles" /></label>
 					<div class="col-md-7">
 						<form:select path="userProfiles" items="${roles}" multiple="true"
 							itemValue="id" itemLabel="type" class="form-control input-sm" />
@@ -114,19 +115,20 @@
 				<div class="form-actions floatRight">
 					<c:choose>
 						<c:when test="${edit}">
-							<input type="submit" value="Update"
-								class="btn btn-primary btn-sm" /> or <a
-								href="<c:url value='/list' />">Cancel</a>
+							<input type="submit" value='<spring:message code="update"/>'
+								class="btn btn-primary btn-sm" />
+							<a href="<c:url value='/users' />"><spring:message
+									code="cancel" /></a>
 						</c:when>
 						<c:otherwise>
 							<input type="submit" value="Register"
-								class="btn btn-primary btn-sm" /> or <a
-								href="<c:url value='/list' />">Cancel</a>
+								class="btn btn-primary btn-sm" />
+							<a href="<c:url value='/users' />"><spring:message
+									code="cancel" /></a>
 						</c:otherwise>
 					</c:choose>
 				</div>
 			</div>
 		</form:form>
 	</div>
-</body>
-</html>
+</div>

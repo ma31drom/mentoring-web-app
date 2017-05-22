@@ -21,6 +21,7 @@ public class CustomUserDetailesUnitTest {
 		User value = new User();
 		value.setSsoId("ssoid");
 		value.setPassword("pass");
+		value.setActivated(true);
 		UserProfile up = new UserProfile();
 		up.setType(UserProfileType.ADMIN.getUserProfileType());
 		value.setUserProfiles(new HashSet<UserProfile>(Arrays.asList(up)));

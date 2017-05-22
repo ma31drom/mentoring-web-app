@@ -14,7 +14,7 @@ import com.epam.mentoring.service.UserProfileService;
 
 @Controller
 @SessionAttributes("roles")
-public class RolesAwareController {
+public class RolesInViewAwareController {
 
 	@Autowired
 	private UserProfileService userProfileService;
@@ -28,7 +28,7 @@ public class RolesAwareController {
 	public String initializeUserName() {
 		return getPrincipal();
 	}
-
+	
 	private String getPrincipal() {
 		String userName = null;
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -87,6 +87,13 @@ min-height: 80px;
     margin:20px;
     margin: 10px 25px 10px 50px;
 }
+.register-spn {
+    float:right;
+    color:#fff;
+    font-size:10px;
+    margin: 20px;
+    margin: 10px 25px 10px 50px;
+}
     .logout-spn a {
         text-decoration:none;
     }

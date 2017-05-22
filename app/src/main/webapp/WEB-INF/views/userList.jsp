@@ -17,7 +17,6 @@
 
 <body>
 	<div class="generic-container">
-		<%@include file="authheader.jsp"%>
 		<div class="panel panel-default">
 			<!-- Default panel contents -->
 			<div class="panel-heading">

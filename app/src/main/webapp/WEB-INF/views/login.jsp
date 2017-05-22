@@ -5,6 +5,11 @@
 
 <div id="page-wrapper">
 	<div id="page-inner">
+		<c:forEach var="message" items="${messages}">
+			<div class="alert alert-success lead">
+				<spring:message code="${message}" />
+			</div>
+		</c:forEach>
 		<div class="login-container">
 			<div class="login-card">
 				<div class="login-form">

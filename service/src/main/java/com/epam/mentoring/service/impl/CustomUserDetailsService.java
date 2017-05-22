@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String ssoId) throws UsernameNotFoundException {
 		User user = userService.findBySSO(ssoId);
-		if (user == null) {
+		if (user == null||!user.isActivated()) {
 			throw new UsernameNotFoundException("Username not found");
 		}
 		return new org.springframework.security.core.userdetails.User(user.getSsoId(),
