@@ -16,17 +16,22 @@
 		<sec:authorize access="isAuthenticated()">
 			<span class="register-spn"><spring:message code="hello" /> <c:out
 					value="${currentUserName}" />!</span>
-			<span class="logout-spn"> <a href="logout"
-				style="color: #fff;"><spring:message code="logout" /></a>
+			<span class="logout-spn"> <c:url var="logoutUrl"
+					value="logout" /> <a href="${logoutUrl}" style="color: #fff;"><spring:message
+						code="logout" /></a>
 			</span>
 		</sec:authorize>
 		<sec:authorize access="!isAuthenticated()">
-			<span class="register-spn"> <a href="registration"
-				style="color: #fff;"><spring:message code="register" /></a>
-			</span>
-			<span class="logout-spn"> <a href="login" style="color: #fff;"><spring:message
+			<span class="register-spn"><c:url var="registrationUrl"
+					value="registration" /> <a href="${registrationUrl}"
+				style="color: #fff;"><spring:message code="registration" /></a> </span>
+			<span class="logout-spn"> <c:url var="loginUrl" value="login" />
+				<a href="${loginUrl}" style="color: #fff;"><spring:message
 						code="login" /></a></span>
 		</sec:authorize>
-
+	</div>
+	<div style="float: right; margin: 5px;">
+		<span style="color: #86b6ff"><spring:message code="theme" /></span> :
+		<a href="?theme=bright">bright</a> | <a href="?theme=dark">dark</a>
 	</div>
 </div>

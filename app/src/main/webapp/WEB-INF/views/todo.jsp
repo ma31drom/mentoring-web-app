@@ -7,12 +7,15 @@
 	<div id="page-inner">
 		<div class="row">
 			<div class="col-md-12">
-				<h2>BLANK PAGE</h2>
+				<h2>IN PROGRESS FOR NOW :)</h2>
 				<c:forEach var="message" items="${messages}">
 					<div class="alert alert-success lead">
 						<spring:message code="${message}" />
 					</div>
 				</c:forEach>
+				<c:if test="${not empty errorMessage}">
+					<div class="alert alert-danger">"${errorMessage}"</div>
+				</c:if>
 			</div>
 		</div>
 		<!-- /. ROW  -->

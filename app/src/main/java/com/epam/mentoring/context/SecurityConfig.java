@@ -40,28 +40,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/").access("hasRole('USER') or hasRole('ADMIN')")
-				.antMatchers("/newuser/**", "/delete-user-*").access("hasRole('ADMIN')").antMatchers("/edit-user-*")
-				.access("hasRole('ADMIN')").and().formLogin().loginPage("/login").loginProcessingUrl("/login")
-				.usernameParameter("ssoId").passwordParameter("password").defaultSuccessUrl("/home", true).and()
-				.rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
+		http.authorizeRequests().antMatchers("/").access("hasRole('USER') or hasRole('ADMIN')").antMatchers("/users/*")
+				.access("hasRole('ADMIN')").and();
+		http.formLogin().loginPage("/login").loginProcessingUrl("/login").usernameParameter("ssoId")
+				.passwordParameter("password").defaultSuccessUrl("/home", true).and();
+		http.rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
 				.tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
 	}
-	/*
-	 * @Override protected void configure(HttpSecurity http) throws Exception {
-	 * http.csrf().disable().authorizeRequests().antMatchers("/resources/**",
-	 * "/*", "WEB-INF/**").permitAll() .anyRequest().permitAll().and();
-	 * 
-	 * http.formLogin().loginPage("/login").loginProcessingUrl(
-	 * "/j_spring_security_check").failureUrl("/login?error=1")
-	 * .usernameParameter("j_username").passwordParameter("j_password").
-	 * permitAll();
-	 * 
-	 * http.logout().permitAll().logoutUrl("/j_spring_security_logout").
-	 * logoutSuccessUrl("/login?logout") .invalidateHttpSession(true);
-	 * 
-	 * }
-	 */
 
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {

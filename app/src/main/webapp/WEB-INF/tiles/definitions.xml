@@ -6,7 +6,7 @@
 	<definition name="home" template="/WEB-INF/template/basicLayout.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/header.jsp" />
 		<put-attribute name="menu" value="/WEB-INF/views/menu.jsp" />
-		<put-attribute name="body" value="/WEB-INF/views/body.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />
 	</definition>
 
@@ -14,16 +14,29 @@
 		<put-attribute name="body" value="/WEB-INF/views/users.jsp" />
 	</definition>
 
-	<definition name="flights" extends="home">
-		<put-attribute name="body" value="/WEB-INF/views/flights.jsp" />
-	</definition>
+
 
 	<definition name="login" extends="home">
 		<put-attribute name="body" value="/WEB-INF/views/login.jsp" />
 	</definition>
-	
+
 	<definition name="registration" extends="home">
 		<put-attribute name="body" value="/WEB-INF/views/registration.jsp" />
 	</definition>
-	
+
+	<definition name="accessDenied" extends="home">
+		<put-attribute name="body" value="/WEB-INF/views/accessDenied.jsp" />
+	</definition>
+
+	<definition name="contacts" extends="home">
+		<put-attribute name="body" value="/WEB-INF/views/todo.jsp" />
+	</definition>
+
+	<definition name="tickets" extends="home">
+		<put-attribute name="body" value="/WEB-INF/views/todo.jsp" />
+	</definition>
+
+	<definition name="flights" extends="home">
+		<put-attribute name="body" value="/WEB-INF/views/todo.jsp" />
+	</definition>
 </tiles-definitions>

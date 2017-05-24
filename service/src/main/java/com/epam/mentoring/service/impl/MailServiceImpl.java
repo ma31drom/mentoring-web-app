@@ -1,7 +1,8 @@
 package com.epam.mentoring.service.impl;
 
-import java.nio.charset.Charset;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -43,6 +44,8 @@ public class MailServiceImpl implements MailService, InitializingBean {
 	@Value("${mail.smtp.port}")
 	private String port;
 
+	private ExecutorService executor;
+
 	private static final String AUTH = "mail.smtp.auth";
 	private static final String TLS = "mail.smtp.starttls.enable";
 	private static final String HOST = "mail.smtp.host";
@@ -50,38 +53,65 @@ public class MailServiceImpl implements MailService, InitializingBean {
 
 	private Properties props;
 
+	public MailServiceImpl() {
+		executor = Executors.newSingleThreadExecutor();
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			executor.shutdown();
+		}));
+	}
+
 	@Override
 	public void sendAuthRequest(User user) throws MessagingException {
-		MimeMessage message = getMailSession();
-		message.setFrom("noreplay@naumovichMentoring");
-		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
-		message.setSubject("Registration confirmation");
-		message.setText(
-				"Please, use next link to confirm your email:\n\n <a href='http://localhost:8181/app/confirm-reg-"
-						+ user.getSsoId() + "'>Confirm link</a>",
-				"UTF-8",
-				"html");
-		Transport.send(message);
+		executor.execute(() -> {
+			MimeMessage message = getMailSession();
+			try {
+				message.setFrom("noreplay@naumovichMentoring");
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
+				message.setSubject("Registration confirmation");
+
+				message.setText(
+						"Please, use next link to confirm your email:\n\n <a href='http://localhost:8181/app/confirm-reg-"
+								+ user.getSsoId() + "'>Confirm link</a>",
+						"UTF-8",
+						"html");
+				Transport.send(message);
+			} catch (MessagingException e) {
+				throw new RuntimeException("Unnable to send message", e);
+			}
+
+		});
 	}
 
 	@Override
 	public void sendSupportRequest(User user, String messageText) throws MessagingException {
-		MimeMessage message = getMailSession();
-		message.setFrom(user.getEmail());
-		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(support));
-		message.setSubject("SupportRequest");
-		message.setText("From " + user.getSsoId() + ", request:/n" + messageText);
-		Transport.send(message);
+		executor.execute(() -> {
+			MimeMessage message = getMailSession();
+			try {
+				message.setFrom(user.getEmail());
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(support));
+				message.setSubject("SupportRequest");
+				message.setText("From " + user.getSsoId() + ", request:/n" + messageText);
+				Transport.send(message);
+			} catch (MessagingException e) {
+				throw new RuntimeException("Unnable to send message", e);
+			}
+		});
 	}
 
 	@Override
 	public void sendSupportRequest(String email, String messageText) throws MessagingException {
-		MimeMessage message = getMailSession();
-		message.setFrom(email);
-		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(support));
-		message.setSubject("SupportRequest");
-		message.setText("From anonumous user, request:/n" + messageText);
-		Transport.send(message);
+		executor.execute(() -> {
+			MimeMessage message = getMailSession();
+			try {
+				message.setFrom(email);
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(support));
+				message.setSubject("SupportRequest");
+				message.setText("From anonumous user, request:/n" + messageText);
+				Transport.send(message);
+			} catch (MessagingException e) {
+				throw new RuntimeException("Unnable to send message", e);
+			}
+		});
 	}
 
 	@Override

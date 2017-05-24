@@ -17,6 +17,9 @@
 				</c:otherwise>
 			</c:choose>
 		</div>
+		<c:if test="${not empty validationError}">
+			<div class="alert alert-danger">"${validationError}"</div>
+		</c:if>
 		<form:form method="POST" modelAttribute="user" class="form-horizontal">
 			<form:input type="hidden" path="id" id="id" />
 
@@ -112,7 +115,7 @@
 			</div>
 
 			<div class="row">
-				<div class="form-actions floatRight">
+				<div style="margin-left: 15px;" class="form-actions floatRight">
 					<c:choose>
 						<c:when test="${edit}">
 							<input type="submit" value='<spring:message code="update"/>'

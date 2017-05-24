@@ -21,6 +21,10 @@ dependencies {
 	compile 'javax.servlet:servlet-api:2.5'
 	compile 'org.apache.tiles:tiles-core:3.0.7'
 	compile 'org.apache.tiles:tiles-jsp:3.0.7'
+	compile 'com.fasterxml.jackson.core:jackson-core:2.8.8'
+	compile 'com.fasterxml.jackson.core:jackson-annotations:2.8.8'
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.8.8'
+
 
 }
 

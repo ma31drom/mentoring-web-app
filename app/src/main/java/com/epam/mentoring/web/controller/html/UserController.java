@@ -1,16 +1,19 @@
-package com.epam.mentoring.web.controller;
+package com.epam.mentoring.web.controller.html;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +32,8 @@ public class UserController extends RolesInViewAwareController {
 	private AuthenticationTrustResolver authenticationTrustResolver;
 	@Autowired
 	private MailService mailService;
+	@Autowired
+	private MessageSource messageSouce;
 
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public ModelAndView users() {
@@ -37,7 +42,7 @@ public class UserController extends RolesInViewAwareController {
 		return mv;
 	}
 
-	@RequestMapping(value = "/delete-user-{ssoID}", method = RequestMethod.GET)
+	@RequestMapping(value = "/users/delete-user-{ssoID}", method = RequestMethod.GET)
 	public ModelAndView home(@PathVariable String ssoID) {
 		userService.deleteUserBySSO(ssoID);
 		ModelAndView mv = new ModelAndView("users");
@@ -46,7 +51,7 @@ public class UserController extends RolesInViewAwareController {
 		return mv;
 	}
 
-	@RequestMapping(value = { "/edit-user-{ssoId}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/users/edit-user-{ssoId}" }, method = RequestMethod.GET)
 	public String editUser(@PathVariable String ssoId, ModelMap model) {
 		User user = userService.findBySSO(ssoId);
 		model.addAttribute("user", user);
@@ -54,13 +59,14 @@ public class UserController extends RolesInViewAwareController {
 		return "registration";
 	}
 
-	@RequestMapping(value = { "/edit-user-{ssoId}" }, method = RequestMethod.POST)
-	public ModelAndView updateUser(@Valid User user, BindingResult result, ModelMap model, @PathVariable String ssoId) {
+	@RequestMapping(value = { "/users/edit-user-{ssoId}" }, method = RequestMethod.POST)
+	public ModelAndView updateUser(@Valid User user, BindingResult result, ModelMap model, @PathVariable String ssoId,
+			Locale locale) {
 
 		if (result.hasErrors()) {
-			// TODO
+			model.addAttribute("validationError",
+					messageSouce.getMessage("user.validation.error", result.getAllErrors().toArray(), locale));
 			model.addAttribute("user", user);
-			model.addAttribute("messages", result.getAllErrors());
 			ModelAndView ret = new ModelAndView("registration");
 			ret.getModelMap().addAllAttributes(model);
 			return ret;
@@ -79,34 +85,53 @@ public class UserController extends RolesInViewAwareController {
 	}
 
 	@RequestMapping(value = { "/registration" }, method = RequestMethod.POST)
-	public String registerUser(@Valid User user, BindingResult result, ModelMap model) {
+	public String registerUser(@Valid User user, BindingResult result, ModelMap model, Locale locale) {
 
 		boolean anonymous = authenticationTrustResolver
 				.isAnonymous(SecurityContextHolder.getContext().getAuthentication());
 
+		if (result.hasErrors()) {
+			model.addAttribute("validationError",
+					messageSouce.getMessage("user.validation.error", result.getAllErrors().toArray(), locale));
+			return "registration";
+		}
+		user.setActivated(false);
+
 		if (anonymous) {
-			if (result.hasErrors()) {
-				return "registration";
-			}
-			user.setActivated(false);
-			userService.save(user);
 			try {
+				userService.save(user);
 				mailService.sendAuthRequest(user);
 			} catch (MessagingException e) {
 				userService.delete(user);
 			}
+			model.addAttribute("messages", Arrays.asList("user.registered.succesfully"));
+		} else {
+			userService.update(user);
+			model.addAttribute("users", userService.findAll());
+			model.addAttribute("messages", Arrays.asList("user.created.succesfully"));
 		}
-		model.addAttribute("messages", Arrays.asList("user.registered.succesfully"));
-		return "home";
+		return anonymous ? "home" : "users";
 	}
 
 	@RequestMapping(value = { "/confirm-reg-{ssoId}" }, method = RequestMethod.GET)
 	public String confirmUser(@PathVariable String ssoId, ModelMap model) {
 		User user = userService.findBySSO(ssoId);
-		user.setActivated(true);
-		userService.save(user);
-		model.addAttribute("messages", "user.confirmed");
+		if (user != null) {
+			user.setActivated(true);
+			userService.update(user);
+			model.addAttribute("messages", "user.confirmed");
+		}
 		return "login";
+	}
+
+	@RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
+	public String accessDeniedPage(ModelMap model) {
+		return "accessDenied";
+	}
+
+	@ModelAttribute("usersPage")
+	public Boolean usersPage() {
+		return true;
 	}
 
 }

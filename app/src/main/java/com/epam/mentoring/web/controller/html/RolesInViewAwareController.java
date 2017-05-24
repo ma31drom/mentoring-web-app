@@ -1,4 +1,4 @@
-package com.epam.mentoring.web.controller;
+package com.epam.mentoring.web.controller.html;
 
 import java.util.List;
 
@@ -8,13 +8,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
 import com.epam.mentoring.model.UserProfile;
 import com.epam.mentoring.service.UserProfileService;
 
 @Controller
 @SessionAttributes("roles")
-public class RolesInViewAwareController {
+public abstract class RolesInViewAwareController {
 
 	@Autowired
 	private UserProfileService userProfileService;
@@ -28,7 +27,7 @@ public class RolesInViewAwareController {
 	public String initializeUserName() {
 		return getPrincipal();
 	}
-	
+
 	private String getPrincipal() {
 		String userName = null;
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -40,4 +39,5 @@ public class RolesInViewAwareController {
 		}
 		return userName;
 	}
+
 }

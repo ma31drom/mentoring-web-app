@@ -15,10 +15,6 @@
 	rel='stylesheet' type='text/css' />
 </head>
 <body>
-	<h3>Spring MVC ThemeResolver Example</h3>
-	theme:
-	<a href="?theme=bright">bright</a> |
-	<a href="?theme=dark">dark</a>
 	<div id="wrapper">
 		<div>
 			<center>

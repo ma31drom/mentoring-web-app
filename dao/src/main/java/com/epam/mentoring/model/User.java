@@ -14,12 +14,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 @Entity
 @Table(name = "APP_USER")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User implements Serializable {
 
 	/**
@@ -59,6 +63,9 @@ public class User implements Serializable {
 
 	@ManyToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<Ticket> tickets;
+
+	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
+	private Account account;
 
 	@ManyToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<Review> reviews;
@@ -144,6 +151,14 @@ public class User implements Serializable {
 
 	public void setActivated(boolean activated) {
 		this.activated = activated;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	@Override

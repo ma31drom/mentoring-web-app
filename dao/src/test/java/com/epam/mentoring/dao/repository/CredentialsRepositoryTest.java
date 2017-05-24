@@ -5,6 +5,7 @@ import static org.testng.Assert.assertEquals;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
@@ -23,6 +24,12 @@ public class CredentialsRepositoryTest extends AbstractTestNGSpringContextTests 
 
 	@Test
 	public void findBySeriesTest() {
+		
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		@SuppressWarnings("unused")
+		String encode = bCryptPasswordEncoder.encode("zxcv");
+		System.out.println(encode);
+		
 		credentials1 = new Credentials();
 		credentials1.setLastUsed(new Date());
 		credentials1.setToken("token10");

@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.epam.mentoring.dao.repository.AccountRepository;
 import com.epam.mentoring.dao.repository.UserRepository;
 import com.epam.mentoring.model.User;
 import com.epam.mentoring.service.UserService;
@@ -17,20 +18,25 @@ public class UserServiceUnitTest {
 
 	private UserRepository repoMock;
 	private PasswordEncoder encoMock;
+	private AccountRepository accRepoMock;
 	private UserService service;
 
 	@BeforeMethod
 	public void init() {
 		repoMock = mock(UserRepository.class);
 		encoMock = mock(PasswordEncoder.class);
+		accRepoMock = mock(AccountRepository.class);
 		when(encoMock.encode(any())).thenReturn("encoded");
-		service = new UserServiceImpl(repoMock, encoMock);
+		service = new UserServiceImpl(repoMock, accRepoMock, encoMock);
 	}
 
 	@Test
 	public void deleteUserTest() {
 
 		User user = new User();
+		user.setSsoId("sso");
+		when(repoMock.findBySsoId(any())).thenReturn(user);
+
 		service.delete(user);
 
 		verify(repoMock, times(1)).delete(eq(user));
@@ -62,10 +68,12 @@ public class UserServiceUnitTest {
 
 	@Test
 	public void deleteUserBySSOTest() {
+		User value = new User();
+		when(repoMock.findBySsoId(any())).thenReturn(value);
 
 		service.deleteUserBySSO("sso");
 
-		verify(repoMock, times(1)).deleteBySsoId(eq("sso"));
+		verify(repoMock, times(1)).delete(eq(value));
 	}
 
 	@Test

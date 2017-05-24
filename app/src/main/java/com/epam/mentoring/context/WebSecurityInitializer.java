@@ -1,26 +1,6 @@
 package com.epam.mentoring.context;
 
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
-public class WebSecurityInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-
-	@Override
-	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] { ApplicationConfig.class };
-	}
-
-	@Override
-	protected Class<?>[] getServletConfigClasses() {
-		return new Class[] { MvcConfig.class };
-	}
-
-	@Override
-	protected String[] getServletMappings() {
-		return new String[] { "/" };
-	}
-
-	@Override
-	protected String getServletName() {
-		return "appDispatcherServlet";
-	}
+public class WebSecurityInitializer extends AbstractSecurityWebApplicationInitializer {
 }

@@ -12,21 +12,24 @@
 		<ul class="nav" id="main-menu">
 			<!-- <span class="badge">Included</span> -->
 
-			<li><a href="home"><i class="fa fa-desktop "></i> <spring:message
+			<li <c:if test="${homePage}">class="active-link"</c:if>><a
+				href="home"><i class="fa fa-desktop "></i> <spring:message
 						code="home" /></a></li>
 
 			<sec:authorize access="hasRole('ADMIN')">
-			<li><a href="users"><i class="fa fa-table "></i><spring:message
-						code="user.management" /></a></li>
+				<li <c:if test="${usersPage}">class="active-link"</c:if>><a
+					href="users"><i class="fa fa-table "></i> <spring:message
+							code="user.management" /></a></li>
 			</sec:authorize>
-			<li class="active-link"><a href="flights"><i
-					class="fa fa-edit "></i>Flights<span class="badge">Included</span></a>
-			</li>
 
 
+			<li <c:if test="${flightsPage}">class="active-link"</c:if>><a
+				href="flights"><i class="fa fa-edit "></i>Flights</a></li>
 
-			<li><a href="#"><i class="fa fa-qrcode "></i>My Link One</a></li>
-			<li><a href="#"><i class="fa fa-bar-chart-o"></i>My Link Two</a></li>
+			<li <c:if test="${ticketsPage}">class="active-link"</c:if>><a
+				href="tickets"><i class="fa fa-qrcode "></i>Tickets</a></li>
+			<li <c:if test="${contactsPage}">class="active-link"</c:if>><a
+				href="contacts"><i class="fa fa-bar-chart-o"></i>Contacts</a></li>
 		</ul>
 	</div>
 
