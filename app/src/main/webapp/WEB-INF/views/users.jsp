@@ -24,11 +24,11 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th>Firstname</th>
-							<th>Lastname</th>
-							<th>Email</th>
-							<th>SSO ID</th>
-							<th>Balance</th>
+							<th><spring:message code="user.first.name" /></th>
+							<th><spring:message code="user.last.name" /></th>
+							<th><spring:message code="user.email" /></th>
+							<th><spring:message code="user.sso" /></th>
+							<th><spring:message code="user.balance" /></th>
 							<th width="100"></th>
 							<th width="100"></th>
 
@@ -42,7 +42,8 @@
 								<td><c:out value="${user.email}" /></td>
 								<td><c:out value="${user.ssoId}" /></td>
 								<td><c:out value="${user.account.balance}" /></td>
-								<td><a href="<c:url value='/users/edit-user-${user.ssoId}' />"
+								<td><a
+									href="<c:url value='/users/edit-user-${user.ssoId}' />"
 									class="btn btn-success custom-width">edit</a></td>
 								<td><c:if test="${user.ssoId ne currentUserName}">
 										<a href="<c:url value='/users/delete-user-${user.ssoId}' />"
@@ -54,9 +55,9 @@
 				</table>
 			</div>
 			<div class="well">
-				<a href="<c:url value='/registration' />">Add New User</a>
+				<a href="<c:url value='/registration' />"><spring:message code="user.add.new" /></a>
 			</div>
-		
+
 		</sec:authorize>
 	</div>
 </div>

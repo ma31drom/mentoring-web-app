@@ -29,11 +29,11 @@
 	</definition>
 
 	<definition name="contacts" extends="home">
-		<put-attribute name="body" value="/WEB-INF/views/todo.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/contacts.jsp" />
 	</definition>
 
 	<definition name="tickets" extends="home">
-		<put-attribute name="body" value="/WEB-INF/views/todo.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/samples.jsp" />
 	</definition>
 
 	<definition name="flights" extends="home">

@@ -61,7 +61,7 @@ public class MailServiceImpl implements MailService, InitializingBean {
 	}
 
 	@Override
-	public void sendAuthRequest(User user) throws MessagingException {
+	public void sendAuthRequest(User user) {
 		executor.execute(() -> {
 			MimeMessage message = getMailSession();
 			try {
@@ -83,7 +83,7 @@ public class MailServiceImpl implements MailService, InitializingBean {
 	}
 
 	@Override
-	public void sendSupportRequest(User user, String messageText) throws MessagingException {
+	public void sendSupportRequest(User user, String messageText) {
 		executor.execute(() -> {
 			MimeMessage message = getMailSession();
 			try {
@@ -99,19 +99,17 @@ public class MailServiceImpl implements MailService, InitializingBean {
 	}
 
 	@Override
-	public void sendSupportRequest(String email, String messageText) throws MessagingException {
-		executor.execute(() -> {
-			MimeMessage message = getMailSession();
-			try {
-				message.setFrom(email);
-				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(support));
-				message.setSubject("SupportRequest");
-				message.setText("From anonumous user, request:/n" + messageText);
-				Transport.send(message);
-			} catch (MessagingException e) {
-				throw new RuntimeException("Unnable to send message", e);
-			}
-		});
+	public void sendSupportRequest(String email, String messageText) {
+		MimeMessage message = getMailSession();
+		try {
+			message.setFrom(email);
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(support));
+			message.setSubject("SupportRequest");
+			message.setText("From anonumous user, request:/n" + messageText);
+			Transport.send(message);
+		} catch (MessagingException e) {
+			throw new RuntimeException("Unnable to send message", e);
+		}
 	}
 
 	@Override

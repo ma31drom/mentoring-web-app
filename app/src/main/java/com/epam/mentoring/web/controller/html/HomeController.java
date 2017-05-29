@@ -1,5 +1,6 @@
 package com.epam.mentoring.web.controller.html;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,11 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.epam.mentoring.model.User;
+import com.epam.mentoring.service.MailService;
+import com.epam.mentoring.web.dto.Feedback;
+import com.sun.mail.imap.protocol.MailboxInfo;
+
 @Controller
 public class HomeController extends RolesInViewAwareController {
 
 	@Autowired
 	AuthenticationTrustResolver authenticationTrustResolver;
+	@Autowired
+	private MailService mailService;
 
 	@Autowired
 	PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices;
@@ -49,6 +57,25 @@ public class HomeController extends RolesInViewAwareController {
 			SecurityContextHolder.getContext().setAuthentication(null);
 		}
 		return "redirect:/home";
+	}
+
+	@RequestMapping(value = "/send-feedback", method = RequestMethod.POST)
+	public String feedback(ModelMap map, Feedback feedback) throws MessagingException {
+		if (isCurrentAuthenticationAnonymous()) {
+			if (feedback.getEmail() == null) {
+				map.addAttribute("errorMessage", "Email not given");
+				return "contacts";
+			}
+			mailService.sendSupportRequest(feedback.getEmail(), feedback.getMessage());
+		} else {
+			mailService.sendSupportRequest(getCurrentUser(), feedback.getMessage());
+		}
+		return "redirect:/home";
+	}
+
+	private User getCurrentUser() {
+		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return null;
 	}
 
 	private boolean isCurrentAuthenticationAnonymous() {

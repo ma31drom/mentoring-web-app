@@ -53,8 +53,8 @@ public class UserServiceImpl implements UserService {
 		User entity = repo.findOne(user.getId());
 		if (entity != null) {
 			entity.setSsoId(user.getSsoId());
-			if (!(passwordEncoder.matches(user.getPassword(), entity.getPassword())
-					|| entity.getPassword().equals(user.getPassword()))) {
+			if (!passwordEncoder.matches(user.getPassword(), entity.getPassword())
+					&& !entity.getPassword().equals(user.getPassword())) {
 				entity.setPassword(passwordEncoder.encode(user.getPassword()));
 			}
 
@@ -62,6 +62,8 @@ public class UserServiceImpl implements UserService {
 			entity.setLastName(user.getLastName());
 			entity.setEmail(user.getEmail());
 			entity.setUserProfiles(user.getUserProfiles());
+			entity.setActivated(user.isActivated());
+			repo.saveAndFlush(entity);
 		}
 	}
 

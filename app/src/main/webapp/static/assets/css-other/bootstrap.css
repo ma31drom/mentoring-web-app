@@ -9,7 +9,6 @@ html {
 	font-family: sans-serif;
 	-webkit-text-size-adjust: 100%;
 	-ms-text-size-adjust: 100%;
-	background-color: #CEF6F5;
 }
 
 body {
@@ -1134,7 +1133,7 @@ body {
 	font-size: 14px;
 	line-height: 1.42857143;
 	color: #333;
-	background-color: #fff;
+	background-color: #81BEF7;
 }
 
 input, button, select, textarea {
@@ -4052,6 +4051,7 @@ border-radius
 	padding-left: 0;
 	margin-bottom: 0;
 	list-style: none;
+	background-color: #81BEF7;
 }
 
 .nav>li {
@@ -6299,6 +6299,7 @@ button.close {
 	height: 0;
 	border-color: transparent;
 	border-style: solid;
+	background-color: #81BEF7;
 }
 
 .tooltip.top .tooltip-arrow {

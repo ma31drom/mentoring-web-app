@@ -12,14 +12,14 @@
 		<ul class="nav" id="main-menu">
 			<!-- <span class="badge">Included</span> -->
 
-			<li <c:if test="${homePage}">class="active-link"</c:if>><a
-				href="home"><i class="fa fa-desktop "></i> <spring:message
-						code="home" /></a></li>
+			<li <c:if test="${homePage}">class="active-link"</c:if>><c:url
+					var="home" value="/home" /> <a href="${home}"><i
+					class="fa fa-desktop "></i> <spring:message code="home" /></a></li>
 
 			<sec:authorize access="hasRole('ADMIN')">
-				<li <c:if test="${usersPage}">class="active-link"</c:if>><a
-					href="users"><i class="fa fa-table "></i> <spring:message
-							code="user.management" /></a></li>
+				<li <c:if test="${usersPage}">class="active-link"</c:if>><c:url
+						var="users" value="/users" /> <a href="${users}"><i
+						class="fa fa-table "></i> <spring:message code="user.management" /></a></li>
 			</sec:authorize>
 
 
@@ -28,8 +28,10 @@
 
 			<li <c:if test="${ticketsPage}">class="active-link"</c:if>><a
 				href="tickets"><i class="fa fa-qrcode "></i>Tickets</a></li>
-			<li <c:if test="${contactsPage}">class="active-link"</c:if>><a
-				href="contacts"><i class="fa fa-bar-chart-o"></i>Contacts</a></li>
+			<li <c:if test="${contactsPage}">class="active-link"</c:if>><c:url
+					var="contacts" value="/contacts" /> <a href="${contacts}"><i
+					class="fa fa-bar-chart-o"></i>
+				<spring:message code="contacts" /></a></li>
 		</ul>
 	</div>
 

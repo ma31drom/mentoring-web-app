@@ -32,6 +32,6 @@
 	</div>
 	<div style="float: right; margin: 5px;">
 		<span style="color: #86b6ff"><spring:message code="theme" /></span> :
-		<a href="?theme=bright">bright</a> | <a href="?theme=dark">dark</a>
+		<a href="?theme=bright"><spring:message code="norm.theme" /></a> | <a href="?theme=dark"><spring:message code="notnorm.theme" /></a>
 	</div>
 </div>

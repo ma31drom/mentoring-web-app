@@ -2,8 +2,6 @@ package com.epam.mentoring.service.impl;
 
 import org.mockito.ArgumentCaptor;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
 
 import com.epam.mentoring.dao.repository.AccountRepository;
 import com.epam.mentoring.dao.repository.UserRepository;
@@ -13,15 +11,17 @@ import static org.mockito.Mockito.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-@Test(singleThreaded = true)
-public class UserServiceUnitTest {
+import org.junit.Before;
+import org.junit.Test;
+
+public class UserServiceUnitJUnitTest {
 
 	private UserRepository repoMock;
 	private PasswordEncoder encoMock;
 	private AccountRepository accRepoMock;
 	private UserService service;
 
-	@BeforeMethod
+	@Before
 	public void init() {
 		repoMock = mock(UserRepository.class);
 		encoMock = mock(PasswordEncoder.class);
@@ -42,7 +42,7 @@ public class UserServiceUnitTest {
 		verify(repoMock, times(1)).delete(eq(user));
 	}
 
-	@Test(timeOut = 100)
+	@Test
 	public void findAllUsersTest() {
 
 		service.findAll();
