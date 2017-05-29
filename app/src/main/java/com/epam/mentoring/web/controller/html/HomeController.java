@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.epam.mentoring.model.User;
 import com.epam.mentoring.service.MailService;
+import com.epam.mentoring.service.UserService;
 import com.epam.mentoring.web.dto.Feedback;
-import com.sun.mail.imap.protocol.MailboxInfo;
 
 @Controller
 public class HomeController extends RolesInViewAwareController {
@@ -28,6 +29,8 @@ public class HomeController extends RolesInViewAwareController {
 	AuthenticationTrustResolver authenticationTrustResolver;
 	@Autowired
 	private MailService mailService;
+	@Autowired
+	private UserService userService;
 
 	@Autowired
 	PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices;
@@ -59,7 +62,7 @@ public class HomeController extends RolesInViewAwareController {
 		return "redirect:/home";
 	}
 
-	@RequestMapping(value = "/send-feedback", method = RequestMethod.POST)
+	@RequestMapping(value = "/contacts", method = RequestMethod.POST)
 	public String feedback(ModelMap map, Feedback feedback) throws MessagingException {
 		if (isCurrentAuthenticationAnonymous()) {
 			if (feedback.getEmail() == null) {
@@ -70,12 +73,18 @@ public class HomeController extends RolesInViewAwareController {
 		} else {
 			mailService.sendSupportRequest(getCurrentUser(), feedback.getMessage());
 		}
+		map.addAttribute("messages", "sent.success");
 		return "redirect:/home";
 	}
 
 	private User getCurrentUser() {
 		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		return null;
+		Object principal = authentication.getPrincipal();
+		if (principal instanceof UserDetails) {
+			return userService.findBySSO(((UserDetails) principal).getUsername());
+		} else {
+			throw new UnsupportedOperationException("Something went wrong");
+		}
 	}
 
 	private boolean isCurrentAuthenticationAnonymous() {

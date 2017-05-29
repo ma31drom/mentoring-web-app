@@ -70,20 +70,26 @@
 								</div>
 							</sec:authorize>
 
-							<spring:message code="contacts.mail.feedback.message" />
+
 							<!-- text inp -->
-							<div class="input-group">
-								<form:input type="textarea" path="message" id="message"
-									class="form-control input-sm" />
-								<div class="has-error">
-									<form:errors path="message" class="help-inline" />
+							<div class="row">
+								<div class="form-group col-md-12">
+									<label class="col-md-3 control-lable" for="email"><spring:message
+											code="contacts.mail.feedback.message" /></label>
+									<div class="col-md-7">
+										<form:textarea type="textarea" path="message" id="message"
+											class="form-control input-sm" />
+										<div class="has-error">
+											<form:errors path="message" class="help-inline" />
+										</div>
+									</div>
 								</div>
 							</div>
 							<!-- btn with send link -->
 							<input type="submit"
 								value='<spring:message code="feedback.send"/>'
 								class="btn btn-info" />
-							<a href="<c:url value='/home' />"><spring:message
+							<a href="<c:url value='/contacts' />"><spring:message
 									code="cancel" /></a>
 
 						</form:form>
