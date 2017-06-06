@@ -22,100 +22,106 @@ import org.hibernate.validator.constraints.Range;
 @Table(name = "REVIEWS")
 public class Review {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "FLIGHT_ID", nullable = false, updatable = false)
-	private Flight flight;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "FLIGHT_ID", nullable = false, updatable = false)
+    private Flight flight;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "USER_ID", nullable = false, updatable = false)
-	private User user;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "USER_ID", nullable = false, updatable = false)
+    private User user;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date postDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date postDate;
 
-	@NotNull
-	@Length(min = 4)
-	@Column(name = "HEADER")
-	private String header;
+    @NotNull
+    @Length(min = 4)
+    @Column(name = "HEADER")
+    private String header;
 
-	@NotNull
-	@Length(min = 4)
-	@Column(name = "REVIEW")
-	private String reviewText;
+    @NotNull
+    @Length(min = 4)
+    @Column(name = "REVIEW")
+    private String reviewText;
 
-	@Range(min = 1, max = 5)
-	@Column(name = "MARK")
-	private Short mark;
+    @Range(min = 1, max = 5)
+    @Column(name = "MARK")
+    private Short mark;
 
-	@Column(name = "MODERATED")
-	private boolean moderated;
+    @Column(name = "MODERATED")
+    private boolean moderated;
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+	return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+	this.id = id;
+    }
 
-	public Flight getFlight() {
-		return flight;
-	}
+    public Flight getFlight() {
+	return flight;
+    }
 
-	public void setFlight(Flight flight) {
-		this.flight = flight;
-	}
+    public void setFlight(Flight flight) {
+	this.flight = flight;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public User getUser() {
+	return user;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setUser(User user) {
+	this.user = user;
+    }
 
-	public Date getPostDate() {
-		return postDate;
-	}
+    public Date getPostDate() {
+	return postDate;
+    }
 
-	public void setPostDate(Date postDate) {
-		this.postDate = postDate;
-	}
+    public void setPostDate(Date postDate) {
+	this.postDate = postDate;
+    }
 
-	public String getHeader() {
-		return header;
-	}
+    public String getHeader() {
+	return header;
+    }
 
-	public void setHeader(String header) {
-		this.header = header;
-	}
+    public void setHeader(String header) {
+	this.header = header;
+    }
 
-	public String getReviewText() {
-		return reviewText;
-	}
+    public String getReviewText() {
+	return reviewText;
+    }
 
-	public void setReviewText(String reviewText) {
-		this.reviewText = reviewText;
-	}
+    public void setReviewText(String reviewText) {
+	this.reviewText = reviewText;
+    }
 
-	public Short getMark() {
-		return mark;
-	}
+    public Short getMark() {
+	return mark;
+    }
 
-	public void setMark(Short mark) {
-		this.mark = mark;
-	}
+    public void setMark(Short mark) {
+	this.mark = mark;
+    }
 
-	public boolean isModerated() {
-		return moderated;
-	}
+    public boolean isModerated() {
+	return moderated;
+    }
 
-	public void setModerated(boolean moderated) {
-		this.moderated = moderated;
-	}
+    public void setModerated(boolean moderated) {
+	this.moderated = moderated;
+    }
+
+    @Override
+    public String toString() {
+	return "Review [id=" + id + ", flight=" + flight + ", user=" + user + ", postDate=" + postDate + ", header="
+		+ header + ", reviewText=" + reviewText + ", mark=" + mark + ", moderated=" + moderated + "]";
+    }
 
 }

@@ -3,6 +3,7 @@ package com.epam.mentoring.web.controller.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.epam.mentoring.model.User;
 import com.epam.mentoring.service.UserService;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.epam.mentoring.web.dto.ResponseDTO;
 
 @RestController
 public class RestJsonController {
@@ -31,38 +32,17 @@ public class RestJsonController {
 		throw new IllegalArgumentException("User not found");
 	}
 
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	class ResponseDTO<T> {
-
-		private Boolean success;
-
-		private String message;
-
-		private T result;
-
-		public Boolean getSuccess() {
-			return success;
+	@RequestMapping(value = "/rest/users/accountRefill/{ssoId}", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public ResponseDTO<Void> refillAccount(@PathVariable String ssoId, @RequestBody Double refill) {
+		ResponseDTO<Void> resp = new ResponseDTO<>();
+		User findBySSO = userService.findBySSO(ssoId);
+		if (findBySSO != null) {
+			findBySSO.getAccount().setBalance(findBySSO.getAccount().getBalance() + refill);
+			resp.setSuccess(true);
+			return resp;
 		}
-
-		public void setSuccess(Boolean success) {
-			this.success = success;
-		}
-
-		public String getMessage() {
-			return message;
-		}
-
-		public void setMessage(String message) {
-			this.message = message;
-		}
-
-		public T getResult() {
-			return result;
-		}
-
-		public void setResult(T result) {
-			this.result = result;
-		}
+		throw new IllegalArgumentException("User not found");
 	}
 
 	@ExceptionHandler

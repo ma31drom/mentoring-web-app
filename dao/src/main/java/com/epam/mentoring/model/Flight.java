@@ -25,123 +25,131 @@ import javax.validation.constraints.NotNull;
 @Table(name = "FLIGHT")
 public class Flight {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinTable(name = "START_AIRPORT", joinColumns = @JoinColumn(name = "START_AIRPORT_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "FLIGhT_ID", referencedColumnName = "ID"))
-	private Airport startAirport;
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinTable(name = "START_AIRPORT", joinColumns = @JoinColumn(name = "START_AIRPORT_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "FLIGhT_ID", referencedColumnName = "ID"))
+    private Airport startAirport;
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinTable(name = "FINISH_AIRPORT", joinColumns = @JoinColumn(name = "FINISH_AIRPORT_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "FLIGHT_ID", referencedColumnName = "ID"))
-	private Airport finishAirport;
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinTable(name = "FINISH_AIRPORT", joinColumns = @JoinColumn(name = "FINISH_AIRPORT_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "FLIGHT_ID", referencedColumnName = "ID"))
+    private Airport finishAirport;
 
-	@OneToMany(mappedBy = "flight", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Ticket> tickets;
+    @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Ticket> tickets;
 
-	@Max(value = 10000)
-	@Column(name = "DISTANCE", nullable = true)
-	private Integer distance;
+    @Max(value = 10000)
+    @Column(name = "DISTANCE", nullable = true)
+    private Integer distance;
 
-	@Column(name = "COST", nullable = false)
-	private Double cost;
+    @Column(name = "COST", nullable = false)
+    private Double cost;
 
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date startDate;
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startDate;
 
-	@NotNull
-	@Column(name = "AVAILABLE_TICKETS", nullable = false)
-	private Integer availableTicketCount;
+    @NotNull
+    @Column(name = "AVAILABLE_TICKETS", nullable = false)
+    private Integer availableTicketCount;
 
-	@NotNull
-	@Column(name = "ALL_TICKETS", nullable = false)
-	private Integer fullTicketCount;
+    @NotNull
+    @Column(name = "ALL_TICKETS", nullable = false)
+    private Integer fullTicketCount;
 
-	@ManyToMany(mappedBy = "flight", fetch = FetchType.LAZY)
-	private List<Review> reviews;
+    @ManyToMany(mappedBy = "flight", fetch = FetchType.LAZY)
+    private List<Review> reviews;
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+	return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+	this.id = id;
+    }
 
-	public Airport getStartAirport() {
-		return startAirport;
-	}
+    public Airport getStartAirport() {
+	return startAirport;
+    }
 
-	public void setStartAirport(Airport startAirport) {
-		this.startAirport = startAirport;
-	}
+    public void setStartAirport(Airport startAirport) {
+	this.startAirport = startAirport;
+    }
 
-	public Airport getFinishAirport() {
-		return finishAirport;
-	}
+    public Airport getFinishAirport() {
+	return finishAirport;
+    }
 
-	public void setFinishAirport(Airport finishAirport) {
-		this.finishAirport = finishAirport;
-	}
+    public void setFinishAirport(Airport finishAirport) {
+	this.finishAirport = finishAirport;
+    }
 
-	public List<Ticket> getTickets() {
-		return tickets;
-	}
+    public List<Ticket> getTickets() {
+	return tickets;
+    }
 
-	public void setTickets(List<Ticket> tickets) {
-		this.tickets = tickets;
-	}
+    public void setTickets(List<Ticket> tickets) {
+	this.tickets = tickets;
+    }
 
-	public Integer getDistance() {
-		return distance;
-	}
+    public Integer getDistance() {
+	return distance;
+    }
 
-	public void setDistance(Integer distance) {
-		this.distance = distance;
-	}
+    public void setDistance(Integer distance) {
+	this.distance = distance;
+    }
 
-	public Double getCost() {
-		return cost;
-	}
+    public Double getCost() {
+	return cost;
+    }
 
-	public void setCost(Double cost) {
-		this.cost = cost;
-	}
+    public void setCost(Double cost) {
+	this.cost = cost;
+    }
 
-	public Date getStartDate() {
-		return startDate;
-	}
+    public Date getStartDate() {
+	return startDate;
+    }
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+    public void setStartDate(Date startDate) {
+	this.startDate = startDate;
+    }
 
-	public Integer getAvailableTicketCount() {
-		return availableTicketCount;
-	}
+    public Integer getAvailableTicketCount() {
+	return availableTicketCount;
+    }
 
-	public void setAvailableTicketCount(Integer availableTicketCount) {
-		this.availableTicketCount = availableTicketCount;
-	}
+    public void setAvailableTicketCount(Integer availableTicketCount) {
+	this.availableTicketCount = availableTicketCount;
+    }
 
-	public Integer getFullTicketCount() {
-		return fullTicketCount;
-	}
+    public Integer getFullTicketCount() {
+	return fullTicketCount;
+    }
 
-	public void setFullTicketCount(Integer fullTicketCount) {
-		this.fullTicketCount = fullTicketCount;
-	}
+    public void setFullTicketCount(Integer fullTicketCount) {
+	this.fullTicketCount = fullTicketCount;
+    }
 
-	public List<Review> getReviews() {
-		return reviews;
-	}
+    public List<Review> getReviews() {
+	return reviews;
+    }
 
-	public void setReviews(List<Review> reviews) {
-		this.reviews = reviews;
-	}
+    public void setReviews(List<Review> reviews) {
+	this.reviews = reviews;
+    }
+
+    @Override
+    public String toString() {
+	return "Flight [id=" + id + ", startAirport=" + startAirport + ", finishAirport=" + finishAirport + ", tickets="
+		+ tickets + ", distance=" + distance + ", cost=" + cost + ", startDate=" + startDate
+		+ ", availableTicketCount=" + availableTicketCount + ", fullTicketCount=" + fullTicketCount
+		+ ", reviews=" + reviews + "]";
+    }
 
 }

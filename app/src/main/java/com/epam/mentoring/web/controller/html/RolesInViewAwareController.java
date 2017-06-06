@@ -3,6 +3,8 @@ package com.epam.mentoring.web.controller.html;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationTrustResolver;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,8 @@ public abstract class RolesInViewAwareController {
 
 	@Autowired
 	private UserProfileService userProfileService;
+	@Autowired
+	private AuthenticationTrustResolver authenticationTrustResolver;
 
 	@ModelAttribute("roles")
 	public List<UserProfile> initializeProfiles() {
@@ -40,4 +44,8 @@ public abstract class RolesInViewAwareController {
 		return userName;
 	}
 
+	public boolean isCurrentAuthenticationAnonymous() {
+		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return authenticationTrustResolver.isAnonymous(authentication);
+	}
 }

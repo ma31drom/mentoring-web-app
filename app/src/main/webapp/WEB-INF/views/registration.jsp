@@ -124,7 +124,7 @@
 									code="cancel" /></a>
 						</c:when>
 						<c:otherwise>
-							<input type="submit" value="Register"
+							<input type="submit" value="<spring:message code="registration"/>"
 								class="btn btn-primary btn-sm" />
 							<a href="<c:url value='/users' />"><spring:message
 									code="cancel" /></a>

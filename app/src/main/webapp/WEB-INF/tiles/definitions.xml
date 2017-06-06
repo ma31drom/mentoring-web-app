@@ -37,6 +37,10 @@
 	</definition>
 
 	<definition name="flights" extends="home">
-		<put-attribute name="body" value="/WEB-INF/views/todo.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/flights.jsp" />
+	</definition>
+	
+	<definition name="confirmOrder" extends="home">
+		<put-attribute name="body" value="/WEB-INF/views/confirmOrder.jsp" />
 	</definition>
 </tiles-definitions>

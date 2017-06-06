@@ -25,7 +25,12 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.theme.CookieThemeResolver;
 import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
+
+import com.epam.mentoring.web.converters.AirportToStringConverter;
+import com.epam.mentoring.web.converters.DateToStringConverter;
+import com.epam.mentoring.web.converters.IdToAirportConverter;
 import com.epam.mentoring.web.converters.RoleToUserProfileConverter;
+import com.epam.mentoring.web.converters.StringToDateConverter;
 
 @Configuration
 @EnableWebMvc
@@ -33,7 +38,15 @@ import com.epam.mentoring.web.converters.RoleToUserProfileConverter;
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
 	@Autowired
-	RoleToUserProfileConverter roleToUserProfileConverter;
+	private RoleToUserProfileConverter roleToUserProfileConverter;
+	@Autowired
+	private AirportToStringConverter airportToIdConverter;
+	@Autowired
+	private DateToStringConverter dateToStringConverter;
+	@Autowired
+	private IdToAirportConverter idToAirportConverter;
+	@Autowired
+	private StringToDateConverter stringToDateConverter;
 
 	/**
 	 * Configure ViewResolvers to deliver preferred views.
@@ -74,6 +87,10 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addFormatters(FormatterRegistry registry) {
 		registry.addConverter(roleToUserProfileConverter);
+		registry.addConverter(idToAirportConverter);
+		registry.addConverter(stringToDateConverter);
+		registry.addConverter(airportToIdConverter);
+		registry.addConverter(dateToStringConverter);
 	}
 
 	@Override

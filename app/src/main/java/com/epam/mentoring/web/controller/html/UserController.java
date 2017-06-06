@@ -8,8 +8,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.security.authentication.AuthenticationTrustResolver;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -28,8 +26,7 @@ public class UserController extends RolesInViewAwareController {
 
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private AuthenticationTrustResolver authenticationTrustResolver;
+
 	@Autowired
 	private MailService mailService;
 	@Autowired
@@ -87,9 +84,6 @@ public class UserController extends RolesInViewAwareController {
 	@RequestMapping(value = { "/registration" }, method = RequestMethod.POST)
 	public String registerUser(@Valid User user, BindingResult result, ModelMap model, Locale locale) {
 
-		boolean anonymous = authenticationTrustResolver
-				.isAnonymous(SecurityContextHolder.getContext().getAuthentication());
-
 		if (result.hasErrors()) {
 			model.addAttribute("validationError",
 					messageSouce.getMessage("user.validation.error", result.getAllErrors().toArray(), locale));
@@ -97,6 +91,7 @@ public class UserController extends RolesInViewAwareController {
 		}
 		user.setActivated(false);
 
+		boolean anonymous = isCurrentAuthenticationAnonymous();
 		if (anonymous) {
 			try {
 				userService.save(user);

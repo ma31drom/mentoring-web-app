@@ -16,45 +16,51 @@ import javax.validation.constraints.NotNull;
 @Table(name = "AIRPORT")
 public class Airport {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@NotNull
-	@Column(name = "NAME", nullable = false, unique = true)
-	private String name;
+    @NotNull
+    @Column(name = "NAME", nullable = false, unique = true)
+    private String name;
 
-	@Column(name = "DESCRIPTION", nullable = true)
-	private String decsription;
+    @Column(name = "DESCRIPTION", nullable = true)
+    private String decsription;
 
-	@OneToMany(mappedBy = "startAirport", fetch = FetchType.LAZY)
-	private List<Flight> fligtsFromHere;
+    @OneToMany(mappedBy = "startAirport", fetch = FetchType.LAZY)
+    private List<Flight> fligtsFromHere;
 
-	@OneToMany(mappedBy = "finishAirport", fetch = FetchType.LAZY)
-	private List<Flight> fligtsToHereHere;
+    @OneToMany(mappedBy = "finishAirport", fetch = FetchType.LAZY)
+    private List<Flight> fligtsToHereHere;
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+	return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+	this.id = id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+	return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+	this.name = name;
+    }
 
-	public String getDecsription() {
-		return decsription;
-	}
+    public String getDecsription() {
+	return decsription;
+    }
 
-	public void setDecsription(String decsription) {
-		this.decsription = decsription;
-	}
+    public void setDecsription(String decsription) {
+	this.decsription = decsription;
+    }
+
+    @Override
+    public String toString() {
+	return "Airport [id=" + id + ", name=" + name + ", decsription=" + decsription + ", fligtsFromHere="
+		+ fligtsFromHere + ", fligtsToHereHere=" + fligtsToHereHere + "]";
+    }
 
 }

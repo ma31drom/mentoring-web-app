@@ -12,6 +12,13 @@
    
     ========================================================  */
 
+$(document).ready(function() {
+    $("#datepicker").datepicker({dateFormat:"yyyy-mm-dd"});
+    });
+
+$(document).ready(function() {
+    $("#datepicker2").datepicker({dateFormat:"yyyy-mm-dd"});
+    });
 
 (function ($) {
     "use strict";
