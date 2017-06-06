@@ -111,7 +111,7 @@ public class FlightControllerTest {
 		List<Flight> list = (List<Flight>) model.getFlashAttributes().get("flights");
 		assertEquals(list.size(), 3);
 		list.forEach(obj -> {
-			assertEquals(obj.getFinishAirport().getId(), endAirport.getId());
+			assertEquals(obj.getStartAirport().getId(), startAirport.getId());
 		});
 	}
 

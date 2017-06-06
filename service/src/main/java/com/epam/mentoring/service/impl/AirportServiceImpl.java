@@ -2,11 +2,13 @@ package com.epam.mentoring.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
 import com.epam.mentoring.dao.repository.AirportRepository;
 import com.epam.mentoring.model.Airport;
 import com.epam.mentoring.service.AirportService;
 
+@Service
 public class AirportServiceImpl extends AbstractCrudService<Airport> implements AirportService {
 
 	@Autowired
